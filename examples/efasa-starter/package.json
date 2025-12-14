@@ -1,0 +1,26 @@
+{
+  "name": "efasa-starter",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check:system": "node scripts/check-system.mjs",
+    "electron:dev": "cross-env EFS_DEV_SERVER_URL=http://localhost:5173 electron electron/main.cjs",
+    "electron:build": "npm run build && electron-builder -c electron-builder.yml"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.4",
+    "cross-env": "^7.0.3",
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3",
+    "vite": "^5.4.8"
+  }
+}

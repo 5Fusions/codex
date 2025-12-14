@@ -62,7 +62,6 @@ You can also use Codex with an API key, but this requires [additional setup](./d
 
 Codex CLI supports [MCP servers](./docs/advanced.md#model-context-protocol-mcp). Enable by adding an `mcp_servers` section to your `~/.codex/config.toml`.
 
-
 ### Configuration
 
 Codex CLI supports a rich set of configuration options, with preferences stored in `~/.codex/config.toml`. For full configuration options, see [Configuration](./docs/config.md).
@@ -78,6 +77,18 @@ Codex CLI supports a rich set of configuration options, with preferences stored 
   - [Memory with AGENTS.md](./docs/getting-started.md#memory--project-docs)
   - [Configuration](./docs/config.md)
 - [**Sandbox & approvals**](./docs/sandbox.md)
+- [**Design and run the Primator copilot**](./docs/copilot-blueprint.md)
+  - Includes a ready-to-copy config at `docs/primator-config.example.toml`
+  - One-step launcher script: `scripts/run-primator.sh`
+  - Primator brain file & multi-model pack: `docs/primator-brains.md` and `docs/primator-brainpack.example.toml`
+- [**Build Efasa (E-State Fusions AI Search Agent)**](./docs/efasa.md)
+  - Starter UI + consent terms: `examples/efasa-starter/`
+  - Learning + marketing stubs: `examples/efasa-starter/src/modules/`
+  - Windows installer quickstart: `docs/efasa-installer.md`
+  - Avatar/voice roadmap: `docs/efasa-embodiment.md`
+- [**Build and run the RFG crawler (Real Estate Fusions GPT)**](./docs/rfg-crawler.md)
+  - Ready-to-copy config: `docs/rfg-crawler-config.example.toml`
+  - Rebuild plan for a clean RFG client: `docs/rfg-rebuild-plan.md`
 - [**Authentication**](./docs/authentication.md)
   - [Auth methods](./docs/authentication.md#forcing-a-specific-auth-method-advanced)
   - [Login on a "Headless" machine](./docs/authentication.md#connecting-on-a-headless-machine)
@@ -99,4 +110,3 @@ Codex CLI supports a rich set of configuration options, with preferences stored 
 ## License
 
 This repository is licensed under the [Apache-2.0 License](LICENSE).
-

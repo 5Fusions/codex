@@ -1,0 +1,22 @@
+appId: com.estfusions.efasa
+productName: Efasa
+files:
+  - dist/**
+  - electron/**
+  - package.json
+asar: true
+directories:
+  output: dist-electron
+  buildResources: build
+win:
+  target:
+    - nsis
+    - portable
+  artifactName: "Efasa-Setup-${version}.${ext}"
+nsis:
+  oneClick: true
+  perMachine: false
+  allowToChangeInstallationDirectory: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+publish: []
