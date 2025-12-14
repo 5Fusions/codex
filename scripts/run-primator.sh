@@ -16,6 +16,11 @@ if ! command -v codex >/dev/null 2>&1; then
   exit 1
 fi
 
+if [ ! -f "$EXAMPLE_CONFIG" ]; then
+  echo "Primator example config missing at $EXAMPLE_CONFIG. Make sure you cloned the docs folder or reinstall." >&2
+  exit 1
+fi
+
 mkdir -p "$CONFIG_DIR"
 
 if [ ! -f "$CONFIG_FILE" ]; then
