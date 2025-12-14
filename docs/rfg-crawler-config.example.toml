@@ -1,0 +1,28 @@
+# Copy or merge this into ~/.codex/config.toml to run the RFG crawler profile.
+# RFG is command-only and approval-gated; it will not run commands without an explicit task and approval.
+
+# Default brain and approvals
+model = "gpt-4o"
+model_provider = "openai"
+approval_policy = "untrusted"
+profile = "rfg_crawler"
+
+[profiles.rfg_crawler]
+model = "gpt-4o"
+model_provider = "openai"
+approval_policy = "untrusted"
+preamble = "You are RFG, a command-only real-estate crawler for Quebec. Only run commands when explicitly asked. Confirm the task and source list, request approval, respect site terms/robots, and export results to CSV/HTML in the configured output directory."
+
+[model_providers.openai]
+name = "OpenAI"
+# Provide OPENAI_API_KEY in the environment before running.
+
+# Optional: keep sources and outputs isolated
+# [rfg]
+# sources_file = "~/.codex/rfg-sources.txt"
+# output_dir = "~/rfg-crawler/output"
+
+# Optional: swap in other providers from docs/primator-brainpack.example.toml
+# model_provider = "gemini"
+# model_provider = "deepseek"
+# model_provider = "ollama"

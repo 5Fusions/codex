@@ -81,6 +81,8 @@ Codex CLI supports a rich set of configuration options, with preferences stored 
   - Includes a ready-to-copy config at `docs/primator-config.example.toml`
   - One-step launcher script: `scripts/run-primator.sh`
   - Primator brain file & multi-model pack: `docs/primator-brains.md` and `docs/primator-brainpack.example.toml`
+- [**Build and run the RFG crawler (Real Estate Fusions GPT)**](./docs/rfg-crawler.md)
+  - Ready-to-copy config: `docs/rfg-crawler-config.example.toml`
 - [**Authentication**](./docs/authentication.md)
   - [Auth methods](./docs/authentication.md#forcing-a-specific-auth-method-advanced)
   - [Login on a "Headless" machine](./docs/authentication.md#connecting-on-a-headless-machine)
