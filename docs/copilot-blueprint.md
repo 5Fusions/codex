@@ -200,6 +200,7 @@ include_only = ["PATH", "HOME", "USER"]
 - **Swap providers per profile**: Create profiles like `profiles.offline` (pointing at Ollama) and `profiles.cloud` (pointing at OpenAI/Azure) to change “brains” without code changes.
 - **Task-scoped overrides**: Launch Codex with `--config model_provider=deepseek` to temporarily route a session through a different provider.
 - **Capabilities matrix**: Document which provider supports which tool calls (e.g., function calling vs. plain text), then constrain prompts accordingly.
+- **Brain file ready-to-copy**: Use `docs/primator-brainpack.example.toml` (documented in `docs/primator-brains.md`) to keep multiple provider definitions in one place—merge the blocks you want into `~/.codex/config.toml` and pick a single `[brains.<name>]` entry per session.
 
 ## Installation targets: laptop and Android
 

@@ -80,6 +80,7 @@ Codex CLI supports a rich set of configuration options, with preferences stored 
 - [**Design and run the Primator copilot**](./docs/copilot-blueprint.md)
   - Includes a ready-to-copy config at `docs/primator-config.example.toml`
   - One-step launcher script: `scripts/run-primator.sh`
+  - Primator brain file & multi-model pack: `docs/primator-brains.md` and `docs/primator-brainpack.example.toml`
 - [**Authentication**](./docs/authentication.md)
   - [Auth methods](./docs/authentication.md#forcing-a-specific-auth-method-advanced)
   - [Login on a "Headless" machine](./docs/authentication.md#connecting-on-a-headless-machine)
