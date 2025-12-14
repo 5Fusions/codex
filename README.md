@@ -78,6 +78,8 @@ Codex CLI supports a rich set of configuration options, with preferences stored 
   - [Memory with AGENTS.md](./docs/getting-started.md#memory--project-docs)
   - [Configuration](./docs/config.md)
 - [**Sandbox & approvals**](./docs/sandbox.md)
+- [**Design and run the Primator copilot**](./docs/copilot-blueprint.md)
+  - Includes a ready-to-copy config at `docs/primator-config.example.toml`
 - [**Authentication**](./docs/authentication.md)
   - [Auth methods](./docs/authentication.md#forcing-a-specific-auth-method-advanced)
   - [Login on a "Headless" machine](./docs/authentication.md#connecting-on-a-headless-machine)
