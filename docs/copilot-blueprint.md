@@ -97,6 +97,7 @@ Follow this concise sequence if you just want Primator working on a Mac, Linux, 
    codex --profile primator
    ```
    - Issue a task (e.g., "initialize a Python project") and approve commands as prompted.
+   - Or use `scripts/run-primator.sh` from this repo to auto-copy the example config (if missing) and start Primator in one step.
    - End the session with `Ctrl+C` or `codex end-session` before switching to a new task.
 
 4. **Optional: add voice I/O**
