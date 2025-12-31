@@ -14,6 +14,7 @@ Purpose: concentrate per-language coding guidance so the agent can produce parit
 - Auth helpers and environment variables.
 - Canonical client initialization and sample calls for stake create/join game/settle/withdraw.
 - Test/lint/build/publish commands and how to run provided examples.
+- Captured docs (source: Stake Development Kit API Documentation; date not specified): front-end framework uses PixiJS/Svelte to render slot games in-browser, consuming math-engine outputs so the UI stays aligned with deterministic outcomes generated offline. Track required PixiJS/Svelte versions/tooling once available and mirror build commands in parity grid.
 
 ### Rust
 - Crate name/features, minimum Rust toolchain, and workspace layout.
@@ -32,6 +33,7 @@ Purpose: concentrate per-language coding guidance so the agent can produce parit
 - Auth/retry middleware and request builders.
 - Example code for the full lifecycle (stake create → withdraw; lobby → settle → distribute) mirroring TypeScript expectations.
 - Test commands (pytest/go test) and packaging/publish steps.
+- Captured docs (source: Stake Development Kit API Documentation): math framework is Python-based for defining slot rules, simulating outcomes, optimizing win distributions, and emitting backend/config files, lookup tables, and simulation results for upload to the Stake Engine/ACP. Capture install/runtime requirements and CLI/API entry points when available; ensure parity grid reflects deterministic artifact generation.
 
 ## Parity grid template
 | Flow | TypeScript entry point | Rust entry point | Cairo/PrimaTor contract fn | Python/Go entry point | Notes/quirks |
