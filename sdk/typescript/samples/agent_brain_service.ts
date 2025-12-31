@@ -47,6 +47,19 @@ interface AgentResponse {
   suggestedCommands: CommandSpec[];
 }
 
+interface VoiceGameDesign {
+  title: string;
+  summary: string;
+  entryFee: number;
+  rewardPoolPercent: number;
+  slashPercent: number;
+  rounds: number;
+  rngSeed: string;
+  playerNames: string[];
+  voiceOver: string[];
+  commands: string[];
+}
+
 class AgentBrain {
   private languages = new Map<string, LanguageProfile>();
   private modules = new Map<string, ModuleProfile>();
@@ -96,6 +109,59 @@ class AgentBrain {
     this.commands.set(command.id, command);
     module.commandIds.push(command.id);
     return command;
+  }
+
+  designStakeGame(prompt: string, moduleId?: string): VoiceGameDesign {
+    const module = moduleId ? this.requireModule(moduleId) : undefined;
+    const lower = prompt.toLowerCase();
+
+    const parseNumber = (regex: RegExp, fallback: number): number => {
+      const match = lower.match(regex);
+      return match ? Number(match[1]) : fallback;
+    };
+
+    const entryFee = parseNumber(/(?:entry|bet|wager|buy[- ]in)[^0-9]*(\d+(?:\.\d+)?)/, 25);
+    const rewardPoolPercent = parseNumber(/(\d{1,3})%[^%]*?(?:reward|payout|pool)/, 70);
+    const slashPercent = parseNumber(/(\d{1,2})%[^%]*?(?:slash|penalt[y|ies]|rake)/, 15);
+    const rounds = parseNumber(/(\d{1,2})\s+round/, 3);
+
+    const guessedNames = new Set(
+      (prompt.match(/\b[A-Z][a-z]{2,}\b/g) ?? [])
+        .filter((name) => !["Build", "Design", "Voice", "Stake"].includes(name))
+        .slice(0, 4),
+    );
+    if (guessedNames.size === 0) {
+      ["Nova", "Rex", "Mira"].forEach((name) => guessedNames.add(name));
+    }
+
+    const rngSeed = lower.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "voice-seed";
+
+    const voiceOver = [
+      "Opening match and locking stakes",
+      `Playing ${rounds} rounds with narrated rolls and scorekeeping`,
+      "Settling rewards, handling penalties, and unlocking balances",
+    ];
+
+    const commands = [
+      ...[...guessedNames].map((name) => `register-player --name ${name}`),
+      `open-match --entry ${entryFee} --reward ${rewardPoolPercent} --slash ${slashPercent} --rounds ${rounds} --seed ${rngSeed}`,
+      "settle-match --id <matchId>",
+    ];
+
+    const moduleTitle = module?.title ?? "Stake Engine";
+
+    return {
+      title: `${moduleTitle} voice-designed match`,
+      summary: `Voice designed match with ${guessedNames.size} players, entry ${entryFee}, reward ${rewardPoolPercent}% pool, ${slashPercent}% slash, ${rounds} rounds, seed ${rngSeed}.`,
+      entryFee,
+      rewardPoolPercent,
+      slashPercent,
+      rounds,
+      rngSeed,
+      playerNames: [...guessedNames],
+      voiceOver,
+      commands,
+    };
   }
 
   respond(prompt: string, moduleId?: string, preferredLanguage?: string, voice?: boolean): AgentResponse {
@@ -354,6 +420,23 @@ class AgentBrainService {
       return;
     }
 
+    if (req.method === "POST" && url.pathname === "/agent/voice-design") {
+      const payload = (await readBody(req)) as {
+        prompt: string;
+        moduleId?: string;
+        preferredLanguage?: string;
+      };
+      const design = this.brain.designStakeGame(payload.prompt, payload.moduleId);
+      const narration = this.brain.respond(
+        `Narrate how to build this: ${design.summary}`,
+        payload.moduleId,
+        payload.preferredLanguage,
+        true,
+      );
+      this.respond(res, 200, { design, narration });
+      return;
+    }
+
     this.respond(res, 404, { error: "Not found" });
   }
 
@@ -436,6 +519,21 @@ class FrontEndClient {
       throw new Error(`Request failed: ${response.status}`);
     }
     return response.json() as Promise<AgentResponse>;
+  }
+
+  async voiceDesign(
+    prompt: string,
+    options: { moduleId?: string; preferredLanguage?: string },
+  ): Promise<{ design: VoiceGameDesign; narration: AgentResponse }> {
+    const response = await fetch(`${this.baseUrl}/agent/voice-design`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt, ...options }),
+    });
+    if (!response.ok) {
+      throw new Error(`Request failed: ${response.status}`);
+    }
+    return response.json() as Promise<{ design: VoiceGameDesign; narration: AgentResponse }>;
   }
 }
 
@@ -548,6 +646,19 @@ const runDemo = async (): Promise<void> => {
   for (const cmd of response.suggestedCommands) {
     // eslint-disable-next-line no-console
     console.log(`- ${cmd.name}: ${cmd.description}`);
+  }
+
+  const voiceDesign = await frontend.voiceDesign(
+    "Voice-build a high-volatility crash game for Nova and Rex with 3 rounds and 30% slash",
+    { moduleId: stakeModuleId, preferredLanguage: "en" },
+  );
+  // eslint-disable-next-line no-console
+  console.log("\nVoice-designed match blueprint:\n", JSON.stringify(voiceDesign.design, null, 2));
+  // eslint-disable-next-line no-console
+  console.log("\nNarration:\n", voiceDesign.narration.message);
+  if (voiceDesign.narration.voiceLine) {
+    // eslint-disable-next-line no-console
+    console.log(voiceDesign.narration.voiceLine);
   }
 
   await service.stop();

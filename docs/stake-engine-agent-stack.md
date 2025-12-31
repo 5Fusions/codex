@@ -13,6 +13,7 @@ The back-end lives in `sdk/typescript/samples/agent_brain_service.ts` and runs a
 - `POST /admin/commands` — add command definitions to a module (name, description, syntax, example).
 - `GET /admin/brain` — snapshot all languages, modules, knowledge, and commands.
 - `POST /agent/message` — user-facing chat entry point; returns a message plus optional voice cue and suggested commands.
+- `POST /agent/voice-design` — turn a voice-described game idea into a stake match blueprint plus narrated build steps.
 
 The server uses only Node's standard library and keeps all data in-memory for quick iteration.
 
@@ -23,7 +24,7 @@ The same sample file includes two lightweight clients:
 - `AdminClient` handles back-end calls to seed languages, modules, knowledge, and commands.
 - `FrontEndClient` posts user prompts to `/agent/message` with optional module selection, preferred language, and voice flag.
 
-A demo run seeds a Stake Engine module (player onboarding, match flow, payouts, voice UX) plus three commands (`register-player`, `open-match`, `settle-match`). The front-end then asks the agent to design and narrate a three-player match and prints the textual and vocal outputs alongside suggested commands.
+A demo run seeds a Stake Engine module (player onboarding, match flow, payouts, voice UX) plus three commands (`register-player`, `open-match`, `settle-match`). The front-end first asks the agent to design and narrate a three-player match and prints the textual and vocal outputs alongside suggested commands. It then sends a voice-style prompt to `/agent/voice-design`, which emits a ready-to-run blueprint (players, stakes, rounds, RNG seed, suggested commands) and a narrated build plan.
 
 ## Running the demo
 
