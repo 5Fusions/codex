@@ -13,10 +13,18 @@ Goal: define how to operate as an offline-first expert coder for staking-enabled
 3. Game/staking acceptance criteria from product/design (win conditions, slashing rules, payout logic, fairness/RNG requirements).
 4. Environment constraints: supported runtimes, deployment targets, testing sandboxes, and security requirements.
 
+## Brain loading checklist (perform before coding any feature)
+1. Load the completed knowledge base, paying special attention to the Language/SDK matrix and any contract ABIs or OpenAPI specs.
+2. For each supported language, note install commands, minimum runtime/toolchain, lint/test commands, and release steps.
+3. Prime a parity grid: map key flows (stake create/top-up/pause/resume/unstake/withdraw; lobby/match lifecycle; settlement; slashing; disputes) to the equivalent function/endpoint names in each language/contract.
+4. Capture known caveats per language: serialization quirks, bigint/decimal handling, async/await vs sync expectations, and platform-specific flags.
+5. Identify official examples/snippets per language to reuse verbatim in new code/tests; store links/anchors for traceability.
+
 ## Core capabilities
 - **Staking primitives:** implement/create/top-up/pause/resume/unstake/withdraw flows; reward accrual and slashing logic; cooldowns and penalties with precise state transitions.
 - **Game lifecycle:** lobby/match/session orchestration, player enrollment, timers/windows, fairness/RNG hooks, settlement and dispute handling.
 - **Integrations:** wire APIs/SDKs/CLIs, event streams (WebSocket/SSE), and contract bindings (PrimaTor/Cairo) with retries, idempotency, and backfill rules.
+- **Language-complete brain:** load the `Language/SDK matrix` from the knowledge base and actively mirror behaviors across TypeScript, Rust, Cairo/PrimaTor, Python/Go (if offered), ensuring naming, validation, and error handling are consistent.
 - **Telemetry & safety:** metrics/logs/traces, health checks, rate limits, anti-cheat/anti-replay defenses, and governance/upgrades where required.
 
 ## Coding playbooks (apply per language/toolchain)
@@ -24,7 +32,8 @@ Goal: define how to operate as an offline-first expert coder for staking-enabled
 - **PrimaTor/Cairo:** generate contracts/modules following documented storage/layout patterns, event emissions, and on-chain/off-chain split; include fuzz/simulation hooks if provided.
 - **Rust:** favor typed clients, error enums, and integration tests derived from canonical request/response pairs; respect feature flags and workspace conventions.
 - **TypeScript/Node:** expose thin SDK wrappers with input validation, backoff/retry helpers, and typed payloads; ship example scripts mirroring quick-starts.
-- **Polyglot consistency:** align naming, state diagrams, and error codes across languages; centralize constants and schemas to avoid drift.
+- **Python/Go (if supported):** mirror TypeScript behavior, ensure consistent auth/retry semantics, and add golden tests from the docs’ canonical payloads.
+- **Polyglot consistency:** align naming, state diagrams, and error codes across languages; centralize constants and schemas to avoid drift. Prefer generating SDKs from a shared schema (OpenAPI/ABI) when possible to guarantee parity.
 
 ## Task execution flow
 1. **Scope:** restate the target feature/fix and map it to knowledge base sections (staking primitive, game integration, SDK endpoint).

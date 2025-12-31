@@ -45,6 +45,13 @@
 - WebSocket/SSE/event streams: subscription patterns, message schemas, heartbeat/keepalive rules, reconnect/backfill guidance.
 - Versioning policy (semantic versioning, deprecation schedule, breaking-change notice period).
 
+### 6a) Language/SDK matrix (populate for every officially supported language)
+- **TypeScript/Node:** package name, install command, runtime targets, required polyfills/flags, example client setup, and end-to-end sample calls (stake create/join game/settle/withdraw).
+- **Rust:** crate names/features, minimum toolchain, workspace layout, CLI integrations, sample client code with typed request/response structs, and test harness commands.
+- **Cairo/PrimaTor or chain-specific contracts:** contract/package names, compiler version, ABI generation steps, storage layout notes, event schema, deploy/upgrade commands, and fuzz/simulation hooks.
+- **Python/Go/other languages (if present):** module/import path, install command, auth helpers, retry/backoff guidance, and parity checks against TypeScript/Rust examples.
+- **Interoperability:** how SDKs stay consistent (shared schemas/openapi files/codegen), drift detection, and changelog cadence per language.
+
 ## 7) Data & persistence
 - Storage expectations: on-chain vs off-chain data, indexing requirements, retention/archival policies.
 - Data schemas for stakes, rewards, game sessions, player profiles, leaderboards, telemetry.
