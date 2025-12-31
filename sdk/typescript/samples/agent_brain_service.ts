@@ -47,6 +47,12 @@ interface AgentResponse {
   suggestedCommands: CommandSpec[];
 }
 
+interface BuildReadiness {
+  ready: boolean;
+  summary: string;
+  missing: string[];
+}
+
 interface VoiceGameDesign {
   title: string;
   summary: string;
@@ -209,6 +215,58 @@ class AgentBrain {
       commands: [...this.commands.values()],
       knowledge: [...this.knowledge.values()],
     };
+  }
+
+  buildReadiness(moduleId?: string): BuildReadiness {
+    const missing: string[] = [];
+    const targetModule = moduleId ? this.requireModule(moduleId) : undefined;
+
+    if (this.languages.size === 0) {
+      missing.push("register at least one language profile");
+    }
+
+    const moduleLanguages = targetModule?.languages ?? [];
+    if (targetModule && moduleLanguages.length === 0) {
+      missing.push(`link a language to module '${targetModule.title}'`);
+    }
+
+    const knowledgePool = targetModule
+      ? targetModule.knowledgeIds.map((id) => this.requireKnowledge(id))
+      : [...this.knowledge.values()];
+    if (knowledgePool.length === 0) {
+      missing.push(targetModule ? "add module knowledge" : "add knowledge items");
+    }
+
+    const commandPool = targetModule
+      ? targetModule.commandIds.map((id) => this.requireCommand(id))
+      : [...this.commands.values()];
+    if (commandPool.length === 0) {
+      missing.push(targetModule ? "add module commands" : "add commands");
+    }
+
+    if (targetModule) {
+      const hasMatchFlow = knowledgePool.some((item) => /match|flow|round/i.test(item.topic));
+      const hasPayouts = knowledgePool.some((item) => /payout|settle|slash/i.test(item.topic));
+      const hasRegistration = knowledgePool.some((item) => /player|register|onboarding/i.test(item.topic));
+
+      if (!hasRegistration) {
+        missing.push("module is missing player onboarding knowledge");
+      }
+      if (!hasMatchFlow) {
+        missing.push("module is missing match flow knowledge");
+      }
+      if (!hasPayouts) {
+        missing.push("module is missing payouts/settlement knowledge");
+      }
+    }
+
+    const ready = missing.length === 0;
+    const contextTitle = targetModule ? `module '${targetModule.title}'` : "global brain";
+    const summary = ready
+      ? `Ready to build stake games with ${contextTitle}`
+      : `Not ready to build stake games with ${contextTitle}`;
+
+    return { ready, summary, missing };
   }
 
   private pickLanguage(module: ModuleProfile | undefined, preferred?: string): LanguageProfile {
@@ -420,6 +478,13 @@ class AgentBrainService {
       return;
     }
 
+    if (req.method === "GET" && url.pathname === "/agent/readiness") {
+      const moduleId = url.searchParams.get("moduleId") ?? undefined;
+      const readiness = this.brain.buildReadiness(moduleId ?? undefined);
+      this.respond(res, 200, readiness);
+      return;
+    }
+
     if (req.method === "POST" && url.pathname === "/agent/voice-design") {
       const payload = (await readBody(req)) as {
         prompt: string;
@@ -519,6 +584,15 @@ class FrontEndClient {
       throw new Error(`Request failed: ${response.status}`);
     }
     return response.json() as Promise<AgentResponse>;
+  }
+
+  async readiness(moduleId?: string): Promise<BuildReadiness> {
+    const params = moduleId ? `?moduleId=${encodeURIComponent(moduleId)}` : "";
+    const response = await fetch(`${this.baseUrl}/agent/readiness${params}`);
+    if (!response.ok) {
+      throw new Error(`Request failed: ${response.status}`);
+    }
+    return response.json() as Promise<BuildReadiness>;
   }
 
   async voiceDesign(
@@ -629,6 +703,14 @@ const runDemo = async (): Promise<void> => {
   const summary = await admin.brainSummary();
   // eslint-disable-next-line no-console
   console.log("\nBrain snapshot", JSON.stringify(summary, null, 2));
+
+  const readiness = await frontend.readiness(stakeModuleId);
+  // eslint-disable-next-line no-console
+  console.log("\nBuild readiness:", readiness.summary);
+  if (readiness.missing.length > 0) {
+    // eslint-disable-next-line no-console
+    console.log("Missing:", readiness.missing.join(", "));
+  }
 
   const response = await frontend.chat(
     "Design a three-player stake match and narrate the flow",
