@@ -34,6 +34,13 @@ npm run dev
 # then open http://localhost:5173
 ```
 
+### Sanity-check the starter structure
+If something feels off (e.g., missing `package.json` or entry files), run:
+```bash
+npm run validate
+```
+You’ll get a list of missing/invalid files and clear instructions (re-extract or restore from git) before reinstalling deps.
+
 ### One-click on Windows
 Double-click `scripts/bootstrap-windows.bat` (or run it in PowerShell/CMD). It will:
 1) run the preflight (platform/arch, RAM, Node 18+, disk — **fails if Node < 18 or < 4GB free disk**)
@@ -41,7 +48,9 @@ Double-click `scripts/bootstrap-windows.bat` (or run it in PowerShell/CMD). It w
 3) install dependencies
 4) start the Vite dev server
 
-If you get repeated errors about missing `react-scripts` or `package.json`, run `scripts/reset-and-run-windows.bat`. It deep-cleans `node_modules` and the lockfile, reruns the preflight checks, reinstalls dependencies, and starts the dev server from the correct folder. Make sure `public/index.html` still exists; if not, re-extract the starter.
+If you get repeated errors about missing `react-scripts` or `package.json`, run `scripts/reset-and-run-windows.bat`. It deep-cleans `node_modules` and the lockfile, reruns the preflight checks, reinstalls dependencies, and starts the dev server from the correct folder. Make sure `index.html` still exists at the project root; if not, re-extract the starter.
+
+If the preflight or dev server fails, run `npm run validate` from this folder to confirm the starter files are present (checks `index.html`, Vite scripts, modules, and helper scripts).
 
 ## Package a Windows installer (.exe)
 ```bash

@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "validate": "node scripts/validate-structure.mjs",
     "check:system": "node scripts/check-system.mjs",
     "electron:dev": "cross-env EFS_DEV_SERVER_URL=http://localhost:5173 electron electron/main.cjs",
     "electron:build": "npm run build && electron-builder -c electron-builder.yml"

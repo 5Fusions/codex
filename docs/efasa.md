@@ -48,8 +48,9 @@ npm install
 npm run dev
 # open http://localhost:5173
 ```
+- Sanity-check the starter if files look missing: `npm run validate` (reports missing entry files/scripts and how to restore).
 - Windows one-click: run `scripts/bootstrap-windows.bat` to auto-install dependencies and start the dev server.
-- If Windows reports missing `react-scripts` or `package.json`, run `scripts/reset-and-run-windows.bat`. It deep-cleans `node_modules`, removes the lockfile, reruns preflight checks, reinstalls, and starts the dev server (requires `public/index.html` to still exist — re-extract if missing).
+- If Windows reports missing `react-scripts` or `package.json`, run `scripts/reset-and-run-windows.bat`. It deep-cleans `node_modules`, removes the lockfile, reruns preflight checks, reinstalls, and starts the dev server (requires `index.html` at the project root — re-extract if missing).
 
 ### Package a Windows installer
 See `docs/efasa-installer.md` for the end-to-end Electron builder flow. In short:
