@@ -2,8 +2,8 @@
 
 Use this checklist to verify the starter is intact and understand what still needs implementation before Efasa becomes a fully functional agent.
 
-## Quick integrity check
-- From `examples/efasa-starter`, run `npm run validate` to confirm required files (entrypoints, scripts, modules, package.json) exist.
+## Latest integrity check
+- `npm run validate` (from `examples/efasa-starter`) **passes** as of this snapshot; entrypoints, scripts, and modules are present.
 - If Windows tooling drifts, run `scripts/reset-and-run-windows.bat` to deep-clean, rerun preflight checks, reinstall deps, and start the dev server.
 
 ## What works now
@@ -18,6 +18,7 @@ Use this checklist to verify the starter is intact and understand what still nee
 - **Scheduler + exports**: implement hourly/approval-gated jobs plus CSV/HTML/email delivery.
 - **Persistence**: route `logInteraction` to storage (DB/file/API) with access controls instead of console logging.
 - **Avatar/voice layer**: no 3D or TTS is bundled; follow `docs/efasa-embodiment.md` if you want the on-screen persona.
+- **Installer polish**: the Electron/NSIS scaffold is present, but branding assets, icon, and EULA screens remain placeholders.
 
 ## Next suggested steps
 1) Run `npm install && npm run dev` (or the Windows bootstrap) to confirm the UI spins up.
