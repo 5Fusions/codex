@@ -40,6 +40,7 @@ A minimal Vite + React starter lives in `examples/efasa-starter/` with:
 - Simulated crawler in `src/modules/crawler-engine.js` so the UI and flow work before a backend exists.
 - Shared defaults in `src/modules/config.js` for region/targets/cadence.
 - Consent/ownership terms in `terms.md`.
+- Status snapshot: `examples/efasa-starter/STATUS.md` summarizes what’s present, missing, and how to validate the starter files.
 
 ### Run locally
 ```bash

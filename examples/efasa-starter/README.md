@@ -2,6 +2,8 @@
 
 A minimal Vite + React starter that bakes in Efasa’s identity, consent notice, learning core stub, and marketing tools placeholder. It is scoped to a **multi-source, province-wide crawler** (not a single-site scraper) with explicit consent for interaction logging.
 
+> Need a quick health report? See `STATUS.md` for what’s present, what’s missing, and how to verify the starter files.
+
 ## Scope at a glance
 - Province-wide coverage for Quebec with modular sources (direct-owner classifieds, login portals, humanity-AI registries).
 - Command-only posture: nothing runs until the user clicks/approves.
