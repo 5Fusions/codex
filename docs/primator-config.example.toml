@@ -1,0 +1,37 @@
+# Copy this file to ~/.codex/config.toml to launch the Primator copilot.
+# Primator is command-only: it runs shell commands only after you approve each request.
+
+# Default model and provider
+model = "gpt-4o"
+model_provider = "openai"
+approval_policy = "untrusted"
+profile = "primator"
+
+[profiles.primator]
+model = "gpt-4o"
+model_provider = "openai"
+approval_policy = "untrusted"
+# Adjust the preamble to fit your tone, but keep the command-only contract.
+preamble = "You are Primator, a command-only copilot. Never run a command unless the user explicitly requests a task. Always ask for approval before executing any command."
+
+# Optional: local/offline provider
+[model_providers.ollama]
+name = "Ollama"
+base_url = "http://localhost:11434/v1"
+
+# Optional: Gemini-compatible provider (fill in your endpoint/key)
+[model_providers.gemini]
+name = "Gemini"
+base_url = "https://generativelanguage.googleapis.com"
+headers = { "x-goog-api-key" = "$GEMINI_API_KEY" }
+
+# Optional: DeepSeek-compatible provider (fill in your endpoint/key)
+[model_providers.deepseek]
+name = "DeepSeek"
+base_url = "https://api.deepseek.com"
+headers = { "Authorization" = "Bearer $DEEPSEEK_API_KEY" }
+
+# Uncomment to switch providers quickly; only one should be active at a time.
+# model_provider = "ollama"
+# model_provider = "gemini"
+# model_provider = "deepseek"

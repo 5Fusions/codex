@@ -1,0 +1,43 @@
+# Primator brain pack: model/provider combos you can paste into ~/.codex/config.toml.
+# The [brains.<name>] tables are informational; set `model` and `model_provider`
+# in your config (or via --config) to one of these combos. Keep Primator's
+# command-only preamble/approval policy from docs/primator-config.example.toml.
+
+[brains.openai]
+model = "gpt-4o"
+model_provider = "openai"
+notes = "Default OpenAI brain with broad capabilities."
+
+[model_providers.openai]
+name = "OpenAI"
+base_url = "https://api.openai.com/v1"
+headers = { "Authorization" = "Bearer $OPENAI_API_KEY" }
+
+[brains.gemini]
+model = "gemini-1.5-pro"
+model_provider = "gemini"
+notes = "Gemini-compatible brain; set your endpoint/key before use."
+
+[model_providers.gemini]
+name = "Gemini"
+base_url = "https://generativelanguage.googleapis.com"
+headers = { "x-goog-api-key" = "$GEMINI_API_KEY" }
+
+[brains.deepseek]
+model = "deepseek-coder"
+model_provider = "deepseek"
+notes = "DeepSeek-compatible brain tuned for code-heavy work."
+
+[model_providers.deepseek]
+name = "DeepSeek"
+base_url = "https://api.deepseek.com"
+headers = { "Authorization" = "Bearer $DEEPSEEK_API_KEY" }
+
+[brains.ollama]
+model = "llama3"
+model_provider = "ollama"
+notes = "Local/offline brain via Ollama; change model to your installed tag."
+
+[model_providers.ollama]
+name = "Ollama"
+base_url = "http://localhost:11434/v1"
